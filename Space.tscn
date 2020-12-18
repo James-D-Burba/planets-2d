@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Planet.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Space.gd" type="Script" id=2]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Paths.gd" type="Script" id=5]
+
+[node name="Space" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Planet1" parent="." instance=ExtResource( 1 )]
+position = Vector2( 500, 300 )
+mass = 1000
+
+[node name="Planet2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 800, 300 )
+mass = 1000
+velocity = Vector2( 0, -100 )
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 120.094, 238.691 )
+mass = 10
+
+[node name="Paths" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Trajectory" type="Line2D" parent="."]
+width = 2.0
+
+[node name="PlanetTrajectory" type="Line2D" parent="."]
