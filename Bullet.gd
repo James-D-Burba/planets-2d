@@ -7,7 +7,6 @@ func _ready():
 
 func on_collide(collision):
 	disappear()
-	queue_free()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
