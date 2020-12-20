@@ -1,3 +1,4 @@
+tool
 extends Node
 
 export(Array, NodePath) var _bodies = []
@@ -9,9 +10,9 @@ var path_steps = 500
 
 func _ready():
 	for path in _bodies:
+		print(path)
 		var body = get_node(path)
 		add_body(body)
-	pass # Replace with function body.
 
 func add_body(body):
 	body.handler = self
@@ -58,7 +59,8 @@ func update_paths(delta):
 		for body in next_step.keys():
 			for other_body in next_step.keys():
 				if body == other_body or not body.fragile:
-					continue
+					if not Engine.editor_hint:
+						continue
 				if next_step[body]['position'].distance_to(next_step[other_body]['position']) < body.radius + other_body.radius:
 					bodies_to_delete.append(body)
 		for body in bodies_to_delete:

@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Planets- 2d"
-run/main_scene="res://Space.tscn"
+run/main_scene="res://Demo.tscn"
 config/icon="res://icon.png"
 
 [input]

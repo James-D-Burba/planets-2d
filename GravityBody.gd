@@ -1,3 +1,4 @@
+tool
 extends KinematicBody2D
 
 export(Array, NodePath) var _affecting_bodies = []
@@ -10,9 +11,14 @@ export var radius = 0
 var handler = null
 export(NodePath) var _trajectory = null
 var trajectory = null
+export var trace_trajectory = false setget set_trace_trajectory
 export var trajectory_color = Color(1,1,1,1)
 export var trajectory_danger_color = Color(1,0,0,1)
 export var fragile = false
+
+func set_trace_trajectory(value):
+	
+	pass
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -23,10 +29,11 @@ func _ready():
 		get_node(path).add_to_array(affecting_bodies)
 	
 func _physics_process(delta):
-	process_input()
-	var collision = move_and_collide(velocity*delta)
-	if collision:
-		on_collide(collision)
+	if not Engine.editor_hint:
+		process_input()
+		var collision = move_and_collide(velocity*delta)
+		if collision:
+			on_collide(collision)
 
 func apply_gforce(force):
 	var acceleration = force / mass

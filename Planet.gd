@@ -1,3 +1,4 @@
+tool
 extends "res://GravityBody.gd"
 
 # Declare member variables here. Examples:

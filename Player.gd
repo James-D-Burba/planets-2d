@@ -1,8 +1,9 @@
+tool
 extends "res://GravityBody.gd"
 
 var Bullet = preload("res://Bullet.tscn")
 
-var acceleration = 3
+var acceleration = 10
 var thrust = Vector2(0,0)
 export(NodePath) var _target = null
 var target = null
@@ -24,9 +25,7 @@ func process_input():
 		$Particles2D.emitting = true
 	else: 
 		$Particles2D.emitting = false
-		
-func _unhandled_input(event):
-	if event.is_action_pressed("shoot"):
+	if Input.is_action_pressed("shoot"):
 		var bullet = Bullet.instance()
 		bullet.global_transform.origin = $Cannon.global_transform.origin
 		bullet.transform.rotated(rotation)
