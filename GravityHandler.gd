@@ -59,7 +59,6 @@ func update_paths(delta):
 		for body in next_step.keys():
 			for other_body in next_step.keys():
 				if body == other_body or not body.fragile:
-					if not Engine.editor_hint:
 						continue
 				if next_step[body]['position'].distance_to(next_step[other_body]['position']) < body.radius + other_body.radius:
 					bodies_to_delete.append(body)
