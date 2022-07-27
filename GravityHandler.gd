@@ -31,6 +31,7 @@ func apply_gravity():
 func update_paths(delta):
 	var current_step = {}
 	for body in bodies:
+		# do we need to do this all the time if trace_trajectory is false?
 		if body.trajectory:
 			body.trajectory.clear_points()
 			body.trajectory.default_color = body.trajectory_color
@@ -42,7 +43,7 @@ func update_paths(delta):
 		for body in current_step.keys():
 			var total_force = Vector2(0,0)
 			for other_body in body.affecting_bodies:
-				if other_body == self:
+				if other_body == self or not current_step.has(other_body):
 					continue
 				var distance = current_step[body]['position'].distance_to(current_step[other_body]['position'])
 				var direction = (current_step[other_body]['position'] - current_step[body]['position']).normalized()
@@ -53,19 +54,19 @@ func update_paths(delta):
 			# use the new velocity, since that's what gets passed to move_and_collide
 			var new_position = current_step[body]['position'] + (new_velocity * delta)
 			next_step[body] = {'position': new_position, 'velocity': new_velocity }
-			if body.trajectory:
+			if body.trajectory and body.trace_trajectory:
 				body.trajectory.add_point(new_position)
 		var bodies_to_delete = []
 		for body in next_step.keys():
 			for other_body in next_step.keys():
-				if body == other_body or not body.fragile:
+				if body == other_body:
 						continue
 				if next_step[body]['position'].distance_to(next_step[other_body]['position']) < body.radius + other_body.radius:
-					bodies_to_delete.append(body)
+					if body.trajectory:
+						body.trajectory.default_color = body.trajectory_danger_color
+					if body.fragile:
+						bodies_to_delete.append(body)
 		for body in bodies_to_delete:
-			#add the final point, if we haven't already added it
-			if body.trajectory:
-				body.trajectory.default_color = body.trajectory_danger_color
 			next_step.erase(body)
 		# todo: how does this work? Does it change the reference?
 		# basically we want two dictionaries without having to allocate new memory that switch

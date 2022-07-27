@@ -11,14 +11,10 @@ export var radius = 0
 var handler = null
 export(NodePath) var _trajectory = null
 var trajectory = null
-export var trace_trajectory = false setget set_trace_trajectory
+export var trace_trajectory = false
 export var trajectory_color = Color(1,1,1,1)
 export var trajectory_danger_color = Color(1,0,0,1)
 export var fragile = false
-
-func set_trace_trajectory(value):
-	
-	pass
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
